@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktif Generator Prompt Logo Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Teal, Amber) -->
+    <!-- Application Structure Plan: A multi-step "wizard" style SPA. The checklist is broken into logical steps (Dasar, Visual, Detail, Kebutuhan Lanjut, Hasil) to guide the user. The final step compiles all inputs into a ready-to-use prompt with a copy function and a "Revisi Prompt" button. Instructions to refresh page for new prompt are added. Custom aspect ratio input implemented. Required field validation meticulously implemented with visual error cues. Prompt generation now adapts to logo type. -->
+    <!-- Visualization & Content Choices: Checklist items are converted to interactive form elements. The extensive list of styles and fonts are presented in searchable modals. Logo types are explained with HTML/CSS icons. Background choice includes a color picker. Color and Font selection now include adaptive options with enhanced prompting for professional results. The final prompt is dynamically generated based on selected logo type. All interactions are handled with vanilla JS. No charts are needed. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .step-indicator { transition: all 0.3s ease-in-out; }
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .style-tag, .font-tag { cursor: pointer; transition: all 0.2s ease; }
+        .style-tag.selected, .font-tag.selected { transform: scale(1.05); }
+        .form-radio-label { display: flex; align-items: center; cursor: pointer; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; transition: all 0.2s ease; }
+        .form-radio-label:hover { border-color: #3b82f6; }
+        .form-radio-label input:checked + div { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); }
+        .form-radio-icon { width: 32px; height: 32px; }
+        .modal-content-scroll { max-height: calc(70vh - 80px); }
+        input[type="color"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-color: transparent; border: none; cursor: pointer; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 1px solid #e5e7eb; border-radius: 0.375rem; }
+        input[type="color"]::-moz-color-swatch { border: 1px solid #e5e7eb; border-radius: 0.375rem; }
+        .option-container fieldset:disabled .manual-inputs, 
+        .option-container fieldset:disabled button,
+        .option-container fieldset:disabled input[type="text"],
+        .option-container fieldset:disabled input[type="color"] { opacity: 0.5; pointer-events: none; cursor: not-allowed; }
+        .input-error {
+            box-shadow: 0 0 0 2px theme('colors.red.400') !important; 
+            border-color: theme('colors.red.400') !important;
+        }
+         .button-error { 
+            border: 2px dashed theme('colors.red.500') !important;
+            box-shadow: 0 0 8px 0px theme('colors.red.300') !important;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800 flex flex-col min-h-screen">
+
+    <div class="container mx-auto max-w-5xl p-4 sm:p-6 md:p-8 flex-grow">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Generator Prompt Logo Profesional</h1>
+            <p class="text-stone-600 mt-2">Rancang prompt logo mendetail untuk hasil AI yang presisi dan berkelas internasional.</p>
+        </header>
+
+        <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
+            
+            <div id="step-navigation" class="flex items-center justify-center border-b border-stone-200 pb-4 mb-8">
+                <div class="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
+                    <div id="step-indicator-1" class="step-indicator flex flex-col items-center">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm md:text-base">1</div>
+                        <p class="text-xs md:text-sm mt-1 font-semibold text-teal-600">Dasar</p>
+                    </div>
+                    <div class="flex-1 h-0.5 md:h-1 bg-stone-200 rounded-full"></div>
+                    <div id="step-indicator-2" class="step-indicator flex flex-col items-center opacity-50">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-300 text-stone-600 flex items-center justify-center font-bold text-sm md:text-base">2</div>
+                        <p class="text-xs md:text-sm mt-1 font-medium text-stone-500">Visual</p>
+                    </div>
+                    <div class="flex-1 h-0.5 md:h-1 bg-stone-200 rounded-full"></div>
+                    <div id="step-indicator-3" class="step-indicator flex flex-col items-center opacity-50">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-300 text-stone-600 flex items-center justify-center font-bold text-sm md:text-base">3</div>
+                        <p class="text-xs md:text-sm mt-1 font-medium text-stone-500">Detail</p>
+                    </div>
+                    <div class="flex-1 h-0.5 md:h-1 bg-stone-200 rounded-full"></div>
+                     <div id="step-indicator-4" class="step-indicator flex flex-col items-center opacity-50">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-300 text-stone-600 flex items-center justify-center font-bold text-sm md:text-base">4</div>
+                        <p class="text-xs md:text-sm mt-1 font-medium text-stone-500">Lanjutan</p>
+                    </div>
+                    <div class="flex-1 h-0.5 md:h-1 bg-stone-200 rounded-full"></div>
+                    <div id="step-indicator-5" class="step-indicator flex flex-col items-center opacity-50">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-300 text-stone-600 flex items-center justify-center font-bold text-sm md:text-base">✓</div>
+                        <p class="text-xs md:text-sm mt-1 font-medium text-stone-500">Hasil</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="logo-form">
+                <!-- Step 1: Basic Info -->
+                <div id="step-1" class="step-content active">
+                    <h2 class="text-xl md:text-2xl font-bold mb-1 text-teal-700">Langkah 1: Informasi Dasar Brand</h2>
+                    <p class="text-stone-500 mb-6 text-sm md:text-base">Fondasi brand Anda. Informasi ini krusial untuk inti logo.</p>
+                    <div class="space-y-5">
+                        <div>
+                            <label for="brandName" class="block text-sm font-medium text-stone-700 mb-1">Nama Brand / Teks Utama <span class="text-red-500">*</span></label>
+                            <input type="text" id="brandName" name="brandName" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: Sagara Dynamics">
+                        </div>
+                        <div>
+                            <label for="slogan" class="block text-sm font-medium text-stone-700 mb-1">Slogan (Opsional)</label>
+                            <input type="text" id="slogan" name="slogan" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: Innovate, Inspire, Integrate">
+                        </div>
+                        <div>
+                            <label for="industry" class="block text-sm font-medium text-stone-700 mb-1">Industri / Niche Brand</label>
+                            <input type="text" id="industry" name="industry" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: Teknologi Finansial, Edukasi Global, Konsultan Bisnis">
+                        </div>
+                        <div>
+                            <label for="brandPersonality" class="block text-sm font-medium text-stone-700 mb-1">Kepribadian Brand (Opsional)</label>
+                            <input type="text" id="brandPersonality" name="brandPersonality" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: The Sage, The Explorer, The Innovator, Visionary, Trusted">
+                        </div>
+                        <div>
+                            <label for="targetAudience" class="block text-sm font-medium text-stone-700 mb-1">Target Audiens</label>
+                            <input type="text" id="targetAudience" name="targetAudience" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: Profesional Muda Global, Eksekutif C-Level, Startup Founder">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Visual Style -->
+                <div id="step-2" class="step-content">
+                    <h2 class="text-xl md:text-2xl font-bold mb-1 text-teal-700">Langkah 2: Gaya Visual & Warna</h2>
+                    <p class="text-stone-500 mb-6 text-sm md:text-base">Pilih tampilan dan nuansa visual yang paling mewakili brand Anda secara global.</p>
+                     <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-2">Tipe Logo <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Combination Mark" class="sr-only">
+                                    <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="form-radio-icon bg-teal-100 text-teal-600 rounded-md flex items-center justify-center font-mono text-xs">Abc 🏛️</div>
+                                            <div class="ml-3"><p class="font-semibold text-sm">Combination</p><p class="text-xs text-stone-500">Teks + Ikon</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Pictorial Mark" class="sr-only">
+                                     <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="form-radio-icon bg-orange-100 text-orange-600 rounded-md flex items-center justify-center text-lg">🏛️</div>
+                                            <div class="ml-3"><p class="font-semibold text-sm">Pictorial</p><p class="text-xs text-stone-500">Ikon Saja</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                                 <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Wordmark" class="sr-only">
+                                     <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="form-radio-icon bg-blue-100 text-blue-600 rounded-md flex items-center justify-center font-serif text-base">Abc</div>
+                                             <div class="ml-3"><p class="font-semibold text-sm">Wordmark</p><p class="text-xs text-stone-500">Teks Saja</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Lettermark" class="sr-only">
+                                     <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                             <div class="form-radio-icon bg-indigo-100 text-indigo-600 rounded-md flex items-center justify-center font-bold text-base">SD</div>
+                                             <div class="ml-3"><p class="font-semibold text-sm">Lettermark</p><p class="text-xs text-stone-500">Inisial</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Abstract Mark" class="sr-only">
+                                     <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                             <div class="form-radio-icon bg-purple-100 text-purple-600 rounded-md flex items-center justify-center text-lg">🌀</div>
+                                             <div class="ml-3"><p class="font-semibold text-sm">Abstract</p><p class="text-xs text-stone-500">Bentuk Abstrak</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="form-radio-label">
+                                    <input type="radio" name="logoType" value="Emblem" class="sr-only">
+                                     <div class="w-full p-3 border-2 border-stone-200 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="form-radio-icon border-2 border-stone-400 text-stone-500 rounded-full flex items-center justify-center font-mono text-xs p-0.5 leading-none">Abc</div>
+                                            <div class="ml-3"><p class="font-semibold text-sm">Emblem</p><p class="text-xs text-stone-500">Teks & Simbol Menyatu</p></div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Gaya Desain <span class="text-red-500">*</span></label>
+                            <div id="selected-styles" class="flex flex-wrap gap-2 mb-2 min-h-[20px]"></div>
+                            <button type="button" id="open-style-modal" class="w-full p-3 border border-dashed border-stone-400 rounded-lg text-stone-600 hover:bg-stone-100 transition">Pilih Gaya Desain (Bisa lebih dari satu)...</button>
+                        </div>
+                         <div>
+                            <label for="desiredMood" class="block text-sm font-medium text-stone-700 mb-1">Kesan yang Diinginkan</label>
+                            <input type="text" id="desiredMood" name="desiredMood" class="w-full p-3 border border-stone-300 rounded-lg" placeholder="Contoh: profesional, inovatif, mewah, ramah, futuristik">
+                        </div>
+                        <div class="option-container">
+                            <label class="block text-sm font-medium text-stone-700 mb-2">Palet Warna <span class="text-red-500">*</span></label>
+                            <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="colorSelectionMode" value="manual" class="mr-2 accent-teal-600"> Pilih Warna Manual
+                                </label>
+                                <fieldset id="manual-color-inputs" class="pl-6 space-y-2 manual-inputs">
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                                        <input type="color" id="mainColor" name="mainColor" class="w-12 h-12 rounded-lg cursor-pointer shadow">
+                                        <input type="color" id="secondColor" name="secondColor" class="w-12 h-12 rounded-lg cursor-pointer shadow">
+                                        <input type="text" id="colorDesc" name="colorDesc" class="flex-1 w-full sm:w-auto p-3 border border-stone-300 rounded-lg" placeholder="Deskripsi warna (cth: earth tones, cool blues)">
+                                    </div>
+                                </fieldset>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="colorSelectionMode" value="adaptive" class="mr-2 accent-teal-600"> Warna Adaptif (biarkan AI menyesuaikan dengan gaya)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Technical Details -->
+                <div id="step-3" class="step-content">
+                    <h2 class="text-xl md:text-2xl font-bold mb-1 text-teal-700">Langkah 3: Detail Font & Elemen</h2>
+                    <p class="text-stone-500 mb-6 text-sm md:text-base">Spesifikasi huruf, simbol, dan elemen visual lainnya.</p>
+                     <div class="space-y-5">
+                         <div class="option-container">
+                            <label class="block text-sm font-medium text-stone-700 mb-2">Gaya Huruf / Font <span class="text-red-500">*</span></label>
+                             <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="fontSelectionMode" value="manual" class="mr-2 accent-teal-600"> Pilih Font Manual
+                                </label>
+                                <fieldset id="manual-font-inputs" class="pl-6 space-y-2 manual-inputs">
+                                    <div id="selected-fonts" class="flex flex-wrap gap-2 mb-2 min-h-[20px]"></div>
+                                    <button type="button" id="open-font-modal" class="w-full p-3 border border-dashed border-stone-400 rounded-lg text-stone-600 hover:bg-stone-100 transition">Pilih Gaya Huruf (Bisa lebih dari satu)...</button>
+                                </fieldset>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="fontSelectionMode" value="adaptive" class="mr-2 accent-teal-600"> Font Adaptif (biarkan AI menyesuaikan dengan gaya)
+                                </label>
+                            </div>
+                         </div>
+                         <div>
+                             <label for="visualElements" class="block text-sm font-medium text-stone-700 mb-1">Elemen Visual / Simbol yang Diinginkan</label>
+                            <input type="text" id="visualElements" name="visualElements" class="w-full p-3 border border-stone-300 rounded-lg" placeholder="Contoh: globe, interconnected lines, abstract gear, stylized initial">
+                         </div>
+                          <div>
+                             <label for="avoidElements" class="block text-sm font-medium text-stone-700 mb-1">Elemen Visual / Simbol yang DIHINDARI</label>
+                            <input type="text" id="avoidElements" name="avoidElements" class="w-full p-3 border border-stone-300 rounded-lg" placeholder="Contoh: klise industri, warna tertentu, bentuk yang terlalu rumit">
+                         </div>
+                         <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-2">Latar Belakang (Background)</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="backgroundType" value="transparent" class="mr-2 accent-teal-600"> Transparan
+                                </label>
+                                <div class="flex items-center space-x-3">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="backgroundType" value="solid" class="mr-2 accent-teal-600"> Warna Solid:
+                                    </label>
+                                    <input type="color" id="backgroundColor" name="backgroundColor" class="w-10 h-10 rounded-md shadow">
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                </div>
+                
+                <!-- Step 4: Advanced Needs -->
+                <div id="step-4" class="step-content">
+                    <h2 class="text-xl md:text-2xl font-bold mb-1 text-teal-700">Langkah 4: Kebutuhan Lanjutan</h2>
+                    <p class="text-stone-500 mb-6 text-sm md:text-base">Pertimbangan khusus untuk penggunaan dan platform.</p>
+                     <div class="space-y-5">
+                        <div>
+                            <label for="platform" class="block text-sm font-medium text-stone-700 mb-1">Platform AI Tujuan</label>
+                            <input type="text" id="platform" name="platform" class="w-full p-3 border border-stone-300 rounded-lg" placeholder="Contoh: Midjourney, DALL-E 3, Adobe Firefly, Stable Diffusion">
+                        </div>
+                        <div>
+                            <label for="aspectRatio" class="block text-sm font-medium text-stone-700 mb-1">Rasio Aspek / Ukuran Akhir</label>
+                            <select id="aspectRatio" name="aspectRatio" class="w-full p-3 border border-stone-300 rounded-lg bg-white">
+                                <option value="1:1 (square, for social media profiles, icons)">1:1 (persegi, untuk profil medsos, ikon)</option>
+                                <option value="16:9 (widescreen, for banners, presentations)">16:9 (lebar, untuk banner, presentasi)</option>
+                                <option value="4:3 (standard, for presentations)">4:3 (standar, untuk presentasi)</option>
+                                <option value="3:2 (common for photography)">3:2 (umum untuk fotografi)</option>
+                                <option value="Custom">Rasio Aspek Kustom (sebutkan)</option>
+                            </select>
+                            <div id="customAspectRatioContainer" class="mt-2 hidden">
+                                <input type="text" id="customAspectRatioValue" name="customAspectRatioValue" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="Contoh: 2:1 atau 1920x1080">
+                            </div>
+                        </div>
+                        <div>
+                             <label for="specialConsiderations" class="block text-sm font-medium text-stone-700 mb-1">Pertimbangan Khusus Lainnya</label>
+                            <textarea id="specialConsiderations" name="specialConsiderations" rows="3" class="w-full p-3 border border-stone-300 rounded-lg" placeholder="Contoh: harus bisa di-animasikan, versi monokrom diperlukan, adaptasi untuk cetak vs digital, scalable vector, simple for embroidery"></textarea>
+                         </div>
+                     </div>
+                </div>
+
+                <!-- Step 5: Final Result -->
+                <div id="step-5" class="step-content">
+                    <h2 class="text-xl md:text-2xl font-bold mb-1 text-teal-700">Hasil Akhir: Prompt Anda Siap!</h2>
+                    <p class="text-stone-500 mb-6 text-sm md:text-base">Salin teks di bawah ini dan gunakan di AI Art Generator pilihan Anda.</p>
+                    <div class="space-y-4">
+                        <div>
+                             <label for="finalPrompt" class="block text-sm font-medium text-stone-700 mb-1">Prompt Lengkap:</label>
+                            <textarea id="finalPrompt" rows="10" class="w-full p-3 bg-stone-100 border border-stone-200 rounded-lg text-stone-700 text-sm" readonly></textarea>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="button" id="copy-button" class="flex-1 bg-amber-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-600 transition-all transform hover:scale-105">Salin Prompt</button>
+                            <button type="button" id="revisi-button" class="flex-1 bg-stone-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-stone-600 transition-all">Revisi Prompt (Kembali)</button>
+                        </div>
+                         <p class="text-sm text-stone-600 mt-2 text-center">Jika ingin buat prompt baru, refresh halaman ini.</p>
+                    </div>
+                </div>
+            </form>
+
+            <div id="navigation-buttons" class="flex justify-between mt-8 pt-4 border-t border-stone-200">
+                <button type="button" id="prev-button" class="bg-stone-200 text-stone-700 font-semibold py-2.5 px-6 rounded-lg hover:bg-stone-300 transition hidden">Kembali</button>
+                <button type="button" id="next-button" class="bg-teal-600 text-white font-semibold py-2.5 px-6 rounded-lg hover:bg-teal-700 transition ml-auto">Lanjut</button>
+            </div>
+        </main>
+    </div>
+    
+    <footer class="text-center p-4 mt-auto">
+        <p class="text-sm text-stone-500">&copy; Supartika 2025</p>
+    </footer>
+
+    <!-- Style Modal -->
+    <div id="style-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center sticky top-0 bg-white rounded-t-2xl">
+                <div>
+                    <h3 class="text-lg font-bold text-teal-800">Pilih Gaya Desain</h3>
+                    <p class="text-xs text-stone-500">Pilih satu atau lebih gaya yang paling sesuai (maks. 5 disarankan).</p>
+                </div>
+                <input type="text" id="style-search" placeholder="Cari gaya..." class="p-2 border border-stone-300 rounded-lg w-1/3 text-sm">
+            </div>
+            <div id="style-list-container" class="p-4 sm:p-6 overflow-y-auto modal-content-scroll">
+                <!-- Categories and styles will be populated by JS -->
+            </div>
+            <div class="p-4 border-t bg-stone-50 text-right sticky bottom-0 rounded-b-2xl">
+                <button id="close-style-modal" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition text-sm">Selesai</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Modal -->
+     <div id="font-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center sticky top-0 bg-white rounded-t-2xl">
+                 <div>
+                    <h3 class="text-lg font-bold text-teal-800">Pilih Gaya Huruf / Font</h3>
+                    <p class="text-xs text-stone-500">Pilih satu atau lebih tipe font (maks. 3 disarankan).</p>
+                </div>
+                <input type="text" id="font-search" placeholder="Cari font..." class="p-2 border border-stone-300 rounded-lg w-1/3 text-sm">
+            </div>
+            <div id="font-list-container" class="p-4 sm:p-6 overflow-y-auto modal-content-scroll">
+                <!-- Categories and fonts will be populated by JS -->
+            </div>
+            <div class="p-4 border-t bg-stone-50 text-right sticky bottom-0 rounded-b-2xl">
+                <button id="close-font-modal" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition text-sm">Selesai</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const createInitialState = () => ({
+        currentStep: 1,
+        brandName: '', slogan: '', industry: '', brandPersonality: '', targetAudience: '',
+        logoType: 'Combination Mark', styles: [], desiredMood: '',
+        colorSelectionMode: 'manual', mainColor: '#0D9488', secondColor: '#F59E0B', colorDesc: '',
+        fontSelectionMode: 'manual', fonts: [], visualElements: '', avoidElements: '', 
+        backgroundType: 'transparent', backgroundColor: '#FFFFFF',
+        platform: '', aspectRatio: '1:1 (square, for social media profiles, icons)', customAspectRatioValue: '', specialConsiderations: '',
+    });
+
+    let state = createInitialState();
+
+    const totalSteps = 5;
+    const steps = document.querySelectorAll('.step-content');
+    const stepIndicators = document.querySelectorAll('[id^="step-indicator-"]');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+    const revisiButton = document.getElementById('revisi-button');
+    
+    const logoForm = document.getElementById('logo-form');
+    
+    const inputErrorClass = 'input-error'; 
+    const buttonErrorClass = 'button-error';
+
+
+    function syncStateWithForm() {
+        state.brandName = document.getElementById('brandName').value;
+        state.slogan = document.getElementById('slogan').value;
+        state.industry = document.getElementById('industry').value;
+        state.brandPersonality = document.getElementById('brandPersonality').value;
+        state.targetAudience = document.getElementById('targetAudience').value;
+        state.desiredMood = document.getElementById('desiredMood').value;
+        state.colorDesc = document.getElementById('colorDesc').value;
+        state.visualElements = document.getElementById('visualElements').value;
+        state.avoidElements = document.getElementById('avoidElements').value;
+        state.platform = document.getElementById('platform').value;
+        state.specialConsiderations = document.getElementById('specialConsiderations').value;
+        state.mainColor = document.getElementById('mainColor').value;
+        state.secondColor = document.getElementById('secondColor').value;
+        state.backgroundColor = document.getElementById('backgroundColor').value;
+        state.aspectRatio = document.getElementById('aspectRatio').value;
+        state.customAspectRatioValue = document.getElementById('customAspectRatioValue').value;
+
+        
+        const logoTypeChecked = document.querySelector('input[name="logoType"]:checked');
+        if (logoTypeChecked) state.logoType = logoTypeChecked.value;
+        
+        const backgroundTypeChecked = document.querySelector('input[name="backgroundType"]:checked');
+        if (backgroundTypeChecked) state.backgroundType = backgroundTypeChecked.value;
+
+        const colorSelectionModeChecked = document.querySelector('input[name="colorSelectionMode"]:checked');
+        if (colorSelectionModeChecked) state.colorSelectionMode = colorSelectionModeChecked.value;
+        
+        const fontSelectionModeChecked = document.querySelector('input[name="fontSelectionMode"]:checked');
+        if (fontSelectionModeChecked) state.fontSelectionMode = fontSelectionModeChecked.value;
+    }
+    
+    const allInputs = logoForm.querySelectorAll('input[type="text"], input[type="color"], select, textarea');
+    allInputs.forEach(input => {
+        input.addEventListener('input', () => input.classList.remove(inputErrorClass));
+        input.addEventListener('change', () => input.classList.remove(inputErrorClass));
+    });
+
+
+    logoForm.addEventListener('input', syncStateWithForm);
+    logoForm.addEventListener('change', syncStateWithForm);
+
+
+    const logoStylesData = {
+        "Minimalis": ["Minimalist", "Monoline", "Negative Space", "Flat Line", "Simple Icon", "One-color Logo", "Geometric Minimalism", "Outlined Symbols", "Single-weight", "Pixel-based", "Whitespace Focused"],
+        "Modern / Tech": ["Futuristic", "Glitch", "Tech Grid", "Circuit-based", "Dot Matrix", "Geometric Sans-Serif", "3D Monogram", "Gradient Mesh", "Low Poly", "Cyberpunk"],
+        "Classic / Traditional": ["Heraldic", "Engraved", "Vintage Stamp", "Art Nouveau", "Art Deco", "Hand-lettered", "Medieval Inspired", "Gothic Text", "Blackletter", "Calligraphy"],
+        "Luxury / Premium": ["Gold Foil", "High Contrast Serif", "Monogram", "Signature Style", "Ornamental Frame", "Embossed", "Elegant Script", "Minimal Luxe", "Crest Style", "Luxury Geometric"],
+        "Playful / Youthful": ["Cartoon Mascot", "Hand-drawn Doodle", "Bubble Letters", "Bright Flat Colors", "Rounded Icons", "Cute Animal Character", "Soft Gradient", "Childlike Typeface", "Sticker Style", "Emoji-inspired"],
+        "Nature / Organic": ["Leaf Motif", "Watercolor", "Earth Tones", "Botanical Illustration", "Hand-inked Style", "Rustic Badge", "Tree Icon", "Flower Mandala", "Natural Texture", "Eco Symbolism"],
+        "Typography-focused": ["Custom Lettering", "Ambigram", "Ligature Design", "Stacked Text", "Overlapping Text", "Distorted Letterforms", "Negative Space Lettering", "Handwritten", "Serif Focused", "Slab Serif"],
+        "Word-shaped Logos": ["Word as Shape", "Text in Shape", "Text Negative Icon", "Letter-based Icon", "Text Shape Fusion", "Isometric Word", "Folded Text", "3D Letter Wrap", "Typographic Illusion", "Typography Object Fusion"],
+        "Mascot-based": ["Animal Mascot", "Robot Mascot", "Human Character", "Monster Mascot", "Sports Mascot", "Superhero Style", "Cartoon Head", "Warrior Emblem", "Funny Icon", "Vintage Mascot"],
+        "Abstract / Experimental": ["Asymmetrical Shapes", "Fractal Patterns", "Fluid Forms", "Digital Decay", "Abstract Symbols", "Optical Illusion", "Modular Logo", "Metaballs", "Deconstructed Typography", "Geometry Distortion"],
+        "Cultural / Ethnic": ["Tribal Symbols", "Asian Calligraphy", "Arabic Geometric", "Balinese Ornament", "African Motif", "Celtic Knots", "Incan Pattern", "Mandalic Symbol", "Islamic Mosaic", "Native American Style"],
+        "Business / Corporate": ["Professional Wordmark", "Corporate Initials", "Abstract Symbol + Name", "Financial Inspired", "Graph Logo", "Bar Graph + Letters", "B2B Clean Lines", "Trust Symbol", "Insurance Emblem", "Abstract Globe"],
+        "Sports / Fitness": ["Shield + Initial", "Power Letters", "Athletic Script", "Speed Lines", "Abstract Motion", "Muscle Icon", "Sneaker Style", "Extreme Angle", "Bold Emblem", "Team Crest"],
+        "Artistic / Creative": ["Paint Splash", "Ink Scribble", "Art Tool Symbol", "Abstract Brush", "Graffiti Style", "Cutout Collage", "Pop Art Logo", "Drip Effect", "Typographic Art", "Cubism Style"],
+        "Retro / Vintage": ["Retro Badge", "60s Psychedelic", "70s Script", "80s Arcade", "90s Vaporwave", "Old-school Stamp", "Retro Pixel", "Vintage Banner", "Nostalgic Gradient", "Rust Texture"],
+        "3D & Motion Inspired": ["3D Folded", "Perspective Text", "Shadow Play", "Parallax Effect", "Motion Blur", "Liquid Chrome", "3D Layers", "Depth Mapping", "Floating Elements", "Hyper-realistic Shape"],
+        "Monogram & Initials": ["Overlapping Initials", "Interlocked Letters", "Negative Monogram", "Script Monogram", "Geometric Monogram", "Minimalist Monogram", "Luxury Serif Monogram", "Symmetric Initials", "Circle-bound Monogram", "Tri-letter Design"],
+        "Typography Shape-Based": ["Text as Circle", "Text forming Triangle", "Letterform Animal Shape", "Word Balloon Shape", "Letters forming Mountain Shape", "Text into Heart Shape", "Text Flowing as Wave", "Text forming Infinity Symbol", "Letter Stack Building", "Letters forming Face", "Word as Arrow", "Letters forming Tree", "Text as Spiral", "Word as Flame", "Text forming Road Curve", "Folded Letter Illusion", "Word in Speech Bubble", "Word Morphing into Icon", "Text bent into Ribbon", "Words as Puzzle Pieces", "Typography forming Star", "Text forming Rocket", "Text forming House", "Letterform forming Camera", "Letters bent into Circle Path", "Typography forming Cloud", "Word shaped as Book", "Negative Space Typography Icon", "Liquid Shape Text", "Isometric Typography Object"],
+        "Futurism & AI Inspired": ["Neural Net Grid", "AI Face Icon", "Chat Bubble Circuit", "Futuristic Dotline", "Digital Wave Typography"],
+        "Grunge & Urban": ["Spray Paint", "Grunge Texture Letters", "Urban Tag Script", "Cracked Font Logo", "Grime Stamp"],
+        "Cinematic / Movie-Inspired": ["Film Strip + Text", "Letterbox Typography", "Retro Title Card", "Blockbuster Gradient", "Neon Sign Logo"],
+        "Editorial / Publishing": ["Newspaper Block Serif", "Magazine Masthead Style", "Book Spine Shape Text", "Serif Logo with Quotes", "Page Fold Typography"]
+    };
+
+
+    const fontStylesData = {
+        "Serif (Klasik & Formal)": ["Times New Roman (Classic)", "Garamond (Elegant)", "Bodoni (High Contrast)", "Didot (Fashionable)", "Clarendon (Slab Serif)", "Rockwell (Geometric Slab)", "Trajan (Roman Capitals)", "Georgia (Web-Friendly)", "Merriweather (Modern Serif)", "Playfair Display (Stylish)"],
+        "Sans-Serif (Modern & Bersih)": ["Helvetica (Neutral)", "Arial (Ubiquitous)", "Univers (Versatile)", "Futura (Geometric)", "Gilroy (Modern Geometric)", "Open Sans (Humanist)", "Lato (Warm Humanist)", "Roboto (Google Standard)", "Montserrat (Urban Grotesque)", "Proxima Nova (Popular Web)", "Avenir (Geometric, Elegant)", "Gotham (Bold, American)", "Poppins (Geometric, Friendly)"],
+        "Script (Elegan & Personal)": ["Brush Script (Casual)", "Pacifico (Retro Web)", "Lobster (Bold Retro)", "Dancing Script (Flowing)", "Great Vibes (Formal Calligraphy)", "Sacramento (Monoline Script)", "Kaushan Script (Rough Brush)", "Satisfy (Google Font)", "Allura (Elegant Thin)", "Yellowtail (Flat Nib)"],
+        "Display & Dekoratif (Unik & Artistik)": ["Impact (Bold Condensed)", "Cooper Black (Rounded, Heavy)", "Bebas Neue (Tall Condensed)", "Abril Fatface (Modern Didone)", "Raleway (Elegant Sans-Serif)", "Lobster Two (Display)", "Alfa Slab One (Heavy Slab)", "Passion One (Bold Display)", "Anton (Impactful Web)", "Righteous (Art Deco Inspired)", "Monoton (Single Line Neon)", "Graduate (College Style)", "Pirata One (Blackletter Inspired)"],
+        "Handwritten (Kasual & Otentik)": ["Comic Sans (Infamous)", "Patrick Hand (Neat Hand)", "Amatic SC (Narrow Caps)", "Permanent Marker (Bold Marker)", "Indie Flower (Quirky)", "Caveat (Brushy Hand)", "Architects Daughter (Drafting)", "Shadows Into Light (Feminine Script)", "Neucha (Cyrillic-style Hand)", "Kalam (Devanagari-style Hand)"],
+        "Monospace (Teknis & Retro)": ["Courier New (Typewriter)", "Consolas (Clear Coding)", "Source Code Pro (Adobe)", "Inconsolata (Google)", "Roboto Mono (Google)", "PT Mono (ParaType)", "Anonymous Pro (Coding)", "Menlo (Apple)", "Lucida Console (Windows)", "Fira Code (Ligatures)"],
+        "Blackletter & Gothic (Historis & Dramatis)": ["Old English Text (Classic Gothic)", "Fraktur (German Blackletter)", "UnifrakturMaguntia (Unicode Fraktur)", "Pirata One (Modern Blackletter)", "Sancreek (Western Blackletter)", "Metal Mania (Heavy Metal Style)"],
+        "Pixel & Bitmap (Retro Gaming & Digital)": ["Press Start 2P (8-bit)", "Pixelify Sans (Google Pixel)", "Silkscreen (Pixel)", "Minecraftia (Game Font)", "VT323 (Retro Terminal)"],
+        "Stencil (Industrial & Militer)": ["Stencil (Classic)", "Archivo Black (Stencil-like)", "Russo One (Bold Stencil)", "Black Ops One (Military Stencil)"],
+        "Tipografi Bentuk (Huruf membentuk objek)": ["Word Art Styles", "Custom Lettering as Shapes", "Typographic Portraits", "Calligrams (text forming an image)"]
+    };
+    
+    const styleListContainer = document.getElementById('style-list-container');
+    const styleSearch = document.getElementById('style-search');
+    const selectedStylesContainer = document.getElementById('selected-styles');
+    const openStyleModalButton = document.getElementById('open-style-modal');
+    
+    function renderStyleCategories(filter = '') {
+        styleListContainer.innerHTML = '';
+        Object.entries(logoStylesData).forEach(([category, styles]) => {
+            const filteredStyles = styles.filter(style => style.toLowerCase().includes(filter.toLowerCase()));
+            if (filteredStyles.length > 0) {
+                const categoryTitle = document.createElement('h4');
+                categoryTitle.className = 'text-md font-semibold text-teal-700 mt-3 mb-2 first:mt-0';
+                categoryTitle.textContent = category;
+                styleListContainer.appendChild(categoryTitle);
+
+                const styleGrid = document.createElement('div');
+                styleGrid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2';
+                
+                filteredStyles.forEach(style => {
+                    const isSelected = state.styles.includes(style);
+                    const tag = document.createElement('div');
+                    tag.textContent = style;
+                    tag.className = `style-tag p-2 text-xs rounded-md border ${isSelected ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-stone-700 border-stone-300 hover:bg-stone-100'}`;
+                    tag.dataset.style = style;
+                    if(isSelected) tag.classList.add('selected');
+                    tag.addEventListener('click', () => toggleStyleSelection(style, tag));
+                    styleGrid.appendChild(tag);
+                });
+                styleListContainer.appendChild(styleGrid);
+            }
+        });
+    }
+    
+    function toggleStyleSelection(style, tagElement) {
+        const index = state.styles.indexOf(style);
+        if (index > -1) {
+            state.styles.splice(index, 1);
+            if(tagElement) {
+                tagElement.classList.remove('selected', 'bg-teal-600', 'text-white', 'border-teal-600');
+                tagElement.classList.add('bg-white', 'text-stone-700', 'border-stone-300', 'hover:bg-stone-100');
+            }
+        } else {
+            if (state.styles.length < 5) { 
+                 state.styles.push(style);
+                if(tagElement) {
+                    tagElement.classList.add('selected', 'bg-teal-600', 'text-white', 'border-teal-600');
+                    tagElement.classList.remove('bg-white', 'text-stone-700', 'border-stone-300', 'hover:bg-stone-100');
+                }
+            } else {
+                alert("Maksimal 5 gaya desain yang dapat dipilih.");
+            }
+        }
+        renderSelectedStyles();
+        if(state.styles.length > 0) openStyleModalButton.classList.remove(buttonErrorClass);
+    }
+    
+    function renderSelectedStyles() {
+        selectedStylesContainer.innerHTML = '';
+        if (state.styles.length === 0) {
+            selectedStylesContainer.innerHTML = '<p class="text-xs text-stone-400 italic">Belum ada gaya yang dipilih.</p>';
+        } else {
+            state.styles.forEach(style => {
+                const tag = document.createElement('div');
+                tag.className = 'bg-teal-100 text-teal-800 text-xs font-semibold px-2 py-1 rounded-full flex items-center';
+                tag.textContent = style;
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'ml-1.5 font-bold text-teal-600 hover:text-teal-800 text-sm';
+                removeBtn.onclick = () => { 
+                    toggleStyleSelection(style, document.querySelector(`.style-tag[data-style="${CSS.escape(style)}"]`));
+                };
+                tag.appendChild(removeBtn);
+                selectedStylesContainer.appendChild(tag);
+            });
+        }
+    }
+
+    styleSearch.addEventListener('input', (e) => renderStyleCategories(e.target.value));
+    openStyleModalButton.addEventListener('click', () => {
+        document.getElementById('style-modal').classList.remove('hidden');
+        renderStyleCategories(styleSearch.value);
+    });
+    document.getElementById('close-style-modal').addEventListener('click', () => {
+        document.getElementById('style-modal').classList.add('hidden');
+    });
+
+    const fontListContainer = document.getElementById('font-list-container');
+    const fontSearch = document.getElementById('font-search');
+    const selectedFontsContainer = document.getElementById('selected-fonts');
+    const manualFontInputsFieldset = document.getElementById('manual-font-inputs');
+    const fontSelectionModeRadios = document.querySelectorAll('input[name="fontSelectionMode"]');
+    const openFontModalButton = document.getElementById('open-font-modal');
+
+    function updateFontSelectionModeUI() {
+        if (state.fontSelectionMode === 'manual') {
+            manualFontInputsFieldset.disabled = false;
+            manualFontInputsFieldset.classList.remove('opacity-50');
+        } else {
+            manualFontInputsFieldset.disabled = true;
+            manualFontInputsFieldset.classList.add('opacity-50');
+        }
+    }
+    fontSelectionModeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.fontSelectionMode = e.target.value;
+            updateFontSelectionModeUI();
+            if (state.fontSelectionMode === 'adaptive') {
+                openFontModalButton.classList.remove(buttonErrorClass);
+            }
+        });
+    });
+
+
+    function renderFontCategories(filter = '') {
+        fontListContainer.innerHTML = '';
+        Object.entries(fontStylesData).forEach(([category, fonts]) => {
+            const filteredFonts = fonts.filter(font => font.toLowerCase().includes(filter.toLowerCase()));
+            if (filteredFonts.length > 0) {
+                const categoryTitle = document.createElement('h4');
+                categoryTitle.className = 'text-md font-semibold text-teal-700 mt-3 mb-2 first:mt-0';
+                categoryTitle.textContent = category;
+                fontListContainer.appendChild(categoryTitle);
+
+                const fontGrid = document.createElement('div');
+                fontGrid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2';
+                
+                filteredFonts.forEach(font => {
+                    const isSelected = state.fonts.includes(font);
+                    const tag = document.createElement('div');
+                    tag.textContent = font;
+                    tag.className = `font-tag p-2 text-xs rounded-md border ${isSelected ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-stone-700 border-stone-300 hover:bg-stone-100'}`;
+                    tag.dataset.font = font;
+                    if(isSelected) tag.classList.add('selected');
+                    tag.addEventListener('click', () => toggleFontSelection(font, tag));
+                    fontGrid.appendChild(tag);
+                });
+                fontListContainer.appendChild(fontGrid);
+            }
+        });
+    }
+
+    function toggleFontSelection(font, tagElement) {
+        const index = state.fonts.indexOf(font);
+        if (index > -1) {
+            state.fonts.splice(index, 1);
+             if(tagElement) {
+                tagElement.classList.remove('selected', 'bg-teal-600', 'text-white', 'border-teal-600');
+                tagElement.classList.add('bg-white', 'text-stone-700', 'border-stone-300', 'hover:bg-stone-100');
+            }
+        } else {
+             if (state.fonts.length < 3) { 
+                state.fonts.push(font);
+                if(tagElement) {
+                    tagElement.classList.add('selected', 'bg-teal-600', 'text-white', 'border-teal-600');
+                    tagElement.classList.remove('bg-white', 'text-stone-700', 'border-stone-300', 'hover:bg-stone-100');
+                }
+            } else {
+                alert("Maksimal 3 gaya huruf yang dapat dipilih.");
+            }
+        }
+        renderSelectedFonts();
+        if(state.fonts.length > 0) openFontModalButton.classList.remove(buttonErrorClass);
+
+    }
+
+    function renderSelectedFonts() {
+        selectedFontsContainer.innerHTML = '';
+        if (state.fonts.length === 0) {
+            selectedFontsContainer.innerHTML = '<p class="text-xs text-stone-400 italic">Belum ada gaya huruf yang dipilih.</p>';
+        } else {
+            state.fonts.forEach(font => {
+                const tag = document.createElement('div');
+                tag.className = 'bg-teal-100 text-teal-800 text-xs font-semibold px-2 py-1 rounded-full flex items-center';
+                tag.textContent = font;
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'ml-1.5 font-bold text-teal-600 hover:text-teal-800 text-sm';
+                removeBtn.onclick = () => { 
+                    toggleFontSelection(font, document.querySelector(`.font-tag[data-font="${CSS.escape(font)}"]`)); 
+                };
+                tag.appendChild(removeBtn);
+                selectedFontsContainer.appendChild(tag);
+            });
+        }
+    }
+
+    fontSearch.addEventListener('input', (e) => renderFontCategories(e.target.value));
+    openFontModalButton.addEventListener('click', () => {
+        document.getElementById('font-modal').classList.remove('hidden');
+        renderFontCategories(fontSearch.value);
+    });
+    document.getElementById('close-font-modal').addEventListener('click', () => {
+        document.getElementById('font-modal').classList.add('hidden');
+    });
+
+    const backgroundTypeRadios = document.querySelectorAll('input[name="backgroundType"]');
+    const backgroundColorPicker = document.getElementById('backgroundColor');
+    const colorSelectionModeRadios = document.querySelectorAll('input[name="colorSelectionMode"]');
+    const manualColorInputsFieldset = document.getElementById('manual-color-inputs');
+
+    function updateColorSelectionModeUI() {
+        if (state.colorSelectionMode === 'manual') {
+            manualColorInputsFieldset.disabled = false;
+            manualColorInputsFieldset.classList.remove('opacity-50');
+        } else {
+            manualColorInputsFieldset.disabled = true;
+            manualColorInputsFieldset.classList.add('opacity-50');
+        }
+    }
+
+    colorSelectionModeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.colorSelectionMode = e.target.value;
+            updateColorSelectionModeUI();
+        });
+    });
+
+    function updateBackgroundColorPickerState() {
+        if (state.backgroundType === 'solid') {
+            backgroundColorPicker.disabled = false;
+            backgroundColorPicker.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            backgroundColorPicker.disabled = true;
+            backgroundColorPicker.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    }
+    
+    backgroundTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.backgroundType = e.target.value;
+            updateBackgroundColorPickerState();
+             if (state.backgroundType === 'solid') {
+                state.backgroundColor = backgroundColorPicker.value;
+            }
+        });
+    });
+
+    backgroundColorPicker.addEventListener('input', (e) => {
+        if (state.backgroundType === 'solid') { 
+            state.backgroundColor = e.target.value;
+        }
+    });
+
+    const aspectRatioSelect = document.getElementById('aspectRatio');
+    const customAspectRatioContainer = document.getElementById('customAspectRatioContainer');
+    const customAspectRatioValueInput = document.getElementById('customAspectRatioValue');
+
+    aspectRatioSelect.addEventListener('change', function() {
+        if (this.value === 'Custom') {
+            customAspectRatioContainer.classList.remove('hidden');
+        } else {
+            customAspectRatioContainer.classList.add('hidden');
+            customAspectRatioValueInput.value = ''; 
+            state.customAspectRatioValue = '';
+            customAspectRatioValueInput.classList.remove(inputErrorClass);
+        }
+        syncStateWithForm(); 
+    });
+
+
+    function updateUI() {
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', (index + 1) === state.currentStep);
+        });
+
+        stepIndicators.forEach((indicator, index) => {
+            const stepNum = index + 1;
+            const circle = indicator.querySelector('div');
+            const text = indicator.querySelector('p');
+
+            if (!circle || !text) return; 
+
+            indicator.classList.remove('opacity-50');
+            circle.classList.remove('bg-stone-300', 'text-stone-600', 'bg-teal-600', 'text-white');
+            text.classList.remove('text-stone-500', 'font-medium', 'text-teal-600', 'font-semibold');
+
+            if (stepNum < state.currentStep) {
+                circle.classList.add('bg-teal-600', 'text-white');
+                text.classList.add('text-teal-600', 'font-semibold');
+                circle.innerHTML = '✓';
+            } else if (stepNum === state.currentStep) {
+                circle.classList.add('bg-teal-600', 'text-white');
+                text.classList.add('text-teal-600', 'font-semibold');
+                circle.innerHTML = (stepNum === totalSteps) ? '✓' : stepNum.toString();
+            } else {
+                indicator.classList.add('opacity-50');
+                circle.classList.add('bg-stone-300', 'text-stone-600');
+                text.classList.add('text-stone-500', 'font-medium');
+                circle.innerHTML = stepNum.toString();
+            }
+        });
+        
+        prevButton.classList.toggle('hidden', state.currentStep === 1);
+        nextButton.textContent = (state.currentStep === totalSteps - 1) ? 'Buat Prompt' : 'Lanjut';
+        nextButton.classList.toggle('hidden', state.currentStep === totalSteps);
+        
+        document.getElementById('navigation-buttons').classList.toggle('hidden', state.currentStep === totalSteps);
+        
+        updateBackgroundColorPickerState();
+        updateColorSelectionModeUI();
+        updateFontSelectionModeUI();
+
+        if (state.aspectRatio === 'Custom') {
+             customAspectRatioContainer.classList.remove('hidden');
+        } else {
+            customAspectRatioContainer.classList.add('hidden');
+        }
+    }
+    
+    function generatePrompt() {
+        syncStateWithForm(); 
+        let promptText = "";
+        const brandNameForPrompt = state.brandName || "the brand";
+        const sloganForPrompt = state.slogan || "";
+
+        if (state.logoType === 'Pictorial Mark' || state.logoType === 'Abstract Mark') {
+            promptText = `AI, create a highly professional and internationally appealing ${state.logoType.toLowerCase()} (icon/symbol only). This logo is for a brand named "${brandNameForPrompt}"`;
+            if (sloganForPrompt) promptText += ` with the slogan "${sloganForPrompt}"`;
+            promptText += `. The icon should be inspired by the brand's context.`;
+        } else if (state.logoType === 'Wordmark') {
+            promptText = `AI, create a highly professional and internationally appealing Wordmark logo for the Brand Name: "${brandNameForPrompt}".`;
+            if (sloganForPrompt) promptText += ` If a slogan "${sloganForPrompt}" is included, it should be secondary, highly legible, and harmoniously integrated with the main brand name.`;
+            promptText += ` Focus entirely on typography; no pictorial elements or icons are needed.`;
+        } else if (state.logoType === 'Lettermark') {
+            const initials = state.brandName.split(' ').map(word => word[0]).join('').toUpperCase() || "LOGO";
+            promptText = `AI, create a highly professional and internationally appealing Lettermark (monogram) logo using the initials "${initials}" (derived from "${brandNameForPrompt}").`;
+            if (sloganForPrompt) promptText += ` The slogan "${sloganForPrompt}" might be subtly integrated if appropriate for a lettermark, or omitted if it detracts from the primary initials.`;
+        } else { // Combination Mark, Emblem
+            promptText = `AI, generate a highly professional and internationally appealing ${state.logoType.toLowerCase()}. Brand Name: "${brandNameForPrompt}".`;
+            if (sloganForPrompt) promptText += ` Slogan: "${sloganForPrompt}".`;
+        }
+
+        if (state.industry) promptText += ` Industry: ${state.industry}.`;
+        if (state.brandPersonality) promptText += ` Brand Personality: ${state.brandPersonality}.`;
+        if (state.targetAudience) promptText += ` Target Audience: ${state.targetAudience}.`;
+        
+        if (state.styles.length > 0) promptText += ` Design Styles: ${state.styles.join(', ')}.`;
+        if (state.desiredMood) promptText += ` Desired Mood/Impression: ${state.desiredMood}.`;
+        
+        if (state.colorSelectionMode === 'manual') {
+            promptText += ` Main Color: ${state.mainColor}, Secondary Color: ${state.secondColor}.`;
+            if (state.colorDesc) promptText += ` Specific Color Palette Description: ${state.colorDesc}.`;
+        } else { 
+            promptText += ` Color Palette: AI must select a sophisticated, internationally appealing, and highly appropriate color palette. This palette must strongly complement the specified design style(s) ('${state.styles.join(', ') || 'general professional style'}'), brand personality ('${state.brandPersonality || 'neutral professional'}'), and desired mood ('${state.desiredMood || 'globally appealing and clear'}'). Prioritize professional, harmonious, and impactful color combinations suitable for a global design agency standard. Avoid overly simplistic, generic, or jarring color choices.`;
+            if (state.colorDesc) promptText += ` Consider this additional color mood hint: ${state.colorDesc}.`;
+        }
+        
+        if (state.logoType !== 'Pictorial Mark' && state.logoType !== 'Abstract Mark') { // Font selection only if text is primary
+            if (state.fontSelectionMode === 'manual') {
+                if (state.fonts.length > 0) promptText += ` Font Styles: ${state.fonts.join(', ')}.`;
+                else promptText += ` Font Style: Use a suitable, professional, and highly legible font.`; 
+            } else { 
+                let fontPrompt = ` Typography: AI must select a professional and internationally appropriate font pairing. The primary font for the brand name "${brandNameForPrompt}" must be exceptionally legible and strongly align with the design style(s) ('${state.styles.join(', ') || 'general professional style'}') and desired mood ('${state.desiredMood || 'professional and clear'}'). (e.g., for a 'Modern Clean' style, a refined geometric sans-serif; for 'Luxury Premium', an elegant serif or a high-contrast modern font).`;
+                if (sloganForPrompt) {
+                    fontPrompt += ` For the tagline "${sloganForPrompt}", its font must be a clear, highly readable, complementary typeface (e.g., a clean sans-serif if the main font is serif, or a lighter weight of the main font family), with a precise and slightly smaller size that ensures a clear visual hierarchy and harmonious balance relative to the brand name, reflecting international design finesse.`;
+                }
+                promptText += fontPrompt;
+            }
+        }
+
+
+        if (state.visualElements) promptText += ` Key Visual Elements for the icon/symbol (if applicable to logo type): ${state.visualElements}.`;
+        if (state.avoidElements) promptText += ` Elements to Avoid: ${state.avoidElements}.`;
+                
+        if (state.backgroundType === 'transparent') {
+            promptText += ` Background: Transparent background for versatility.`;
+        } else if (state.backgroundType === 'solid') {
+            promptText += ` Background: Solid color background, specifically ${state.backgroundColor}.`;
+        }
+        
+        let finalAspectRatio = state.aspectRatio;
+        if (state.aspectRatio === 'Custom' && state.customAspectRatioValue.trim() !== '') {
+            finalAspectRatio = state.customAspectRatioValue.trim();
+        } else if (state.aspectRatio === 'Custom' && state.customAspectRatioValue.trim() === '') {
+            finalAspectRatio = '1:1 (square, as default for custom)'; 
+        }
+
+
+        if (state.platform) promptText += ` Optimized for AI Platform: ${state.platform} (interpret parameters as best as possible for this platform).`;
+        promptText += ` Aspect Ratio: ${finalAspectRatio}.`;
+        if (state.specialConsiderations) promptText += ` Special Considerations: ${state.specialConsiderations}.`;
+        
+        promptText += ` The final logo must strictly exhibit superior design quality, absolute clarity, impeccable legibility, and perfectly balanced proportions, particularly between the brand name and tagline (if present and applicable to logo type). The overall aesthetic must meet the highest international professional design agency standards and be suitable for versatile global use. A vector art style is strongly preferred for scalability and professional output, unless a specific textural or illustrative style (like 'photorealistic', 'watercolor') is explicitly requested in the design styles. Ensure the output is clean, refined, and production-ready.`;
+        
+        document.getElementById('finalPrompt').value = promptText;
+    }
+    
+    function validateCurrentStep() {
+        let isValid = true;
+        let firstErrorElement = null;
+
+        const currentStepElement = document.getElementById(`step-${state.currentStep}`);
+        if (currentStepElement) {
+             currentStepElement.querySelectorAll(`.${inputErrorClass}, .${buttonErrorClass}`).forEach(el => {
+                el.classList.remove(inputErrorClass);
+                el.classList.remove(buttonErrorClass); 
+            });
+        }
+
+        if (state.currentStep === 1) {
+            const brandNameInput = document.getElementById('brandName');
+            if (state.brandName.trim() === '') {
+                brandNameInput.classList.add(inputErrorClass);
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = brandNameInput;
+            }
+        } else if (state.currentStep === 2) {
+            if (state.styles.length === 0) {
+                openStyleModalButton.classList.add(buttonErrorClass);
+                isValid = false;
+                 if (!firstErrorElement) firstErrorElement = openStyleModalButton;
+            }
+        } else if (state.currentStep === 3) {
+            if (state.fontSelectionMode === 'manual' && state.fonts.length === 0) {
+                openFontModalButton.classList.add(buttonErrorClass);
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = openFontModalButton;
+            }
+        }  else if (state.currentStep === 4) {
+            if (state.aspectRatio === 'Custom' && state.customAspectRatioValue.trim() === '') {
+                 document.getElementById('customAspectRatioValue').classList.add(inputErrorClass);
+                 isValid = false;
+                 if (!firstErrorElement) firstErrorElement = document.getElementById('customAspectRatioValue');
+            }
+        }
+
+
+        if (!isValid) {
+            alert('Isi dengan benar.');
+            if (firstErrorElement && typeof firstErrorElement.focus === 'function') {
+                setTimeout(() => firstErrorElement.focus(), 0);
+            }
+        }
+        return isValid;
+    }
+
+
+    nextButton.addEventListener('click', () => {
+        syncStateWithForm(); 
+        if (!validateCurrentStep()) {
+            return;
+        }
+
+        if (state.currentStep < totalSteps) {
+            state.currentStep++;
+            if (state.currentStep === totalSteps) { 
+                generatePrompt();
+            }
+            updateUI();
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+    
+    prevButton.addEventListener('click', () => {
+        if (state.currentStep > 1) {
+            state.currentStep--;
+            syncStateWithForm(); 
+            updateUI();
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+    
+    if (revisiButton) { 
+        revisiButton.addEventListener('click', () => {
+            if(state.currentStep === totalSteps) { 
+                 state.currentStep = totalSteps - 1; 
+                 syncStateWithForm(); 
+                 updateUI();
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
+    
+    document.getElementById('copy-button').addEventListener('click', () => {
+        const textarea = document.getElementById('finalPrompt');
+        textarea.select();
+        document.execCommand('copy');
+        const copyButton = document.getElementById('copy-button');
+        const originalText = copyButton.textContent;
+        copyButton.textContent = 'Berhasil Disalin!';
+        copyButton.classList.add('bg-green-500', 'hover:bg-green-600');
+        copyButton.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+        setTimeout(() => {
+            copyButton.textContent = originalText;
+            copyButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+            copyButton.classList.add('bg-amber-500', 'hover:bg-amber-600');
+        }, 2000);
+    });
+
+    function initializeFormOnLoad() {
+        const initState = createInitialState(); 
+        state = { ...initState }; 
+
+        document.getElementById('brandName').value = initState.brandName;
+        document.getElementById('slogan').value = initState.slogan;
+        document.getElementById('industry').value = initState.industry;
+        document.getElementById('brandPersonality').value = initState.brandPersonality;
+        document.getElementById('targetAudience').value = initState.targetAudience;
+        document.getElementById('desiredMood').value = initState.desiredMood;
+        
+        document.getElementById('mainColor').value = initState.mainColor;
+        document.getElementById('secondColor').value = initState.secondColor;
+        document.getElementById('colorDesc').value = initState.colorDesc;
+        
+        document.getElementById('visualElements').value = initState.visualElements;
+        document.getElementById('avoidElements').value = initState.avoidElements;
+        
+        document.getElementById('backgroundColor').value = initState.backgroundColor;
+        
+        document.getElementById('platform').value = initState.platform;
+        document.getElementById('aspectRatio').value = initState.aspectRatio;
+        document.getElementById('customAspectRatioValue').value = initState.customAspectRatioValue; 
+        document.getElementById('specialConsiderations').value = initState.specialConsiderations;
+        
+        document.getElementById('finalPrompt').value = '';
+        
+        document.querySelector(`input[name="logoType"][value="${initState.logoType}"]`).checked = true;
+        document.querySelector(`input[name="backgroundType"][value="${initState.backgroundType}"]`).checked = true;
+        document.querySelector(`input[name="colorSelectionMode"][value="${initState.colorSelectionMode}"]`).checked = true;
+        document.querySelector(`input[name="fontSelectionMode"][value="${initState.fontSelectionMode}"]`).checked = true;
+        
+        document.getElementById('style-search').value = '';
+        document.getElementById('font-search').value = '';
+        
+        document.getElementById('brandName').classList.remove(inputErrorClass);
+        openStyleModalButton.classList.remove(buttonErrorClass);
+        openFontModalButton.classList.remove(buttonErrorClass);
+        document.getElementById('customAspectRatioValue').classList.remove(inputErrorClass);
+        
+        renderSelectedStyles(); 
+        renderSelectedFonts();  
+        
+        updateUI(); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    initializeFormOnLoad();
+
+});
+</script>
+
+</body>
+</html>
